@@ -1,5 +1,5 @@
-OBJECTS = ex3-2.o
-TARGET = ex3-2.out
+OBJECTS = shellsort.o
+TARGET = shellsort.out
 $(TARGET): $(OBJECTS)
 	cc -o $(TARGET) $(OBJECTS)
 #ex3-1.o: ex3-1.c
