@@ -25,11 +25,14 @@ static char getd(int n) {
   }
 }
 
-static void itob(int n, char s[], int b) {
+static void itob(int n, char s[], int b, int wid) {
   assert(b <= 16);
   int rmd, i;
   for (rmd = n, i = 0; rmd; rmd /= b) {
     s[i++] = getd(rmd % b);
+  }
+  for (; i < wid; ++i) {
+    s[i] = ' ';
   }
   s[i] = 0;
   reverse(s);
@@ -38,8 +41,9 @@ static void itob(int n, char s[], int b) {
 main(int argc, char *argv[]) {
   const int N = atoi(argv[1]);
   const int RADIX = atoi(argv[2]);
+  const int W = atoi(argv[3]);
 
   char s[SIZE];
-  itob(N, s, RADIX);
+  itob(N, s, RADIX, W);
   puts(s);
 }
