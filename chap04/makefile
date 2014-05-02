@@ -1,5 +1,5 @@
-OBJECTS = ex4-1.o
-TARGET = ex4-1.out
+OBJECTS = ex4-2.o
+TARGET = ex4-2.out
 $(TARGET): $(OBJECTS)
 	cc -o $(TARGET) $(OBJECTS)
 #ex3-1.o: ex3-1.c
