@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "stack.h"
 
 #define PUTG(x)         printf(#x": %g\n", (x))
@@ -27,6 +28,16 @@ static int getop(char **pps, char s[]) {
   else return ps[i - 1];
 }
 
+static int is_exp(char s[]) {
+  char sexp[] = "exp";
+  int i;
+  for (i = 0; sexp[i] && s[i] && sexp[i] == s[i]; ++i);
+  if (sexp[i] == 0 && s[i] == 0) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
 static double cal(char equ[]) {
   char s[MAX_SIZE];
   char *ps;
@@ -35,6 +46,7 @@ static double cal(char equ[]) {
   ps = equ;
   do {
     sign = getop(&ps, s);
+    //puts(ps);
     switch (sign) {
       case IS_NUMBER: 
         push(atof(s)); 
@@ -51,6 +63,12 @@ static double cal(char equ[]) {
         push((int)pop() % (int)t);
         break;
       default:
+        if (is_exp(s)) {
+          t = pop();
+          //PUTG(t);
+          //getchar();
+          push(exp(t));
+        }
         break;
     }
   } while (sign != EOF);
