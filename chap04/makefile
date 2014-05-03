@@ -1,8 +1,9 @@
-OBJECTS = ex4-5.o stack.o
-TARGET = ex4-5.out
+OBJECTS = ex4-6.o stack.o cal.o
+TARGET = ex4-6.out
 $(TARGET): $(OBJECTS)
 	cc -o $(TARGET) $(OBJECTS) -lm
-ex4-3.o: stack.h stack_api.h
+ex4-6.o: cal.h
+cal.o: stack.h
 stack_api.o: stack.h
 
 .PHONY: clean
