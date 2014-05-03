@@ -30,4 +30,7 @@ void print_stack() {
   puts("");
 }
 
+void clear() {
+  top = 0;
+}
 #undef STACK_SIZE
