@@ -11,6 +11,7 @@
 
 static double var[26];
 static double ans;
+static char cur_var;
 
 // get operator or number
 static int getop(char **pps, char s[]) {
@@ -30,7 +31,7 @@ static int getop(char **pps, char s[]) {
   }
   s[i] = 0;
   if (isdigit(ps[i - 1])) return IS_NUMBER;
-  else if (isupper(ps[i - 1])) return IS_VAR;
+  else if (i == 1 && isupper(ps[0])) return IS_VAR;
   else return ps[i - 1];
 }
 
@@ -58,6 +59,15 @@ double cal(char equ[]) {
     switch (sign) {
       case IS_NUMBER: 
         push(atof(s)); 
+        break;
+      case IS_VAR:
+        cur_var = s[0];
+        push(var[cur_var - 'A']);
+        break;
+      case '=':
+        pop();
+        var[cur_var - 'A'] = pop();
+        push(var[cur_var - 'A']);
         break;
       case '+':
         push(pop() + pop());
