@@ -1,5 +1,5 @@
-OBJECTS = ex4-6.o stack.o cal.o
-TARGET = ex4-6.out
+OBJECTS = ex4-11.o
+TARGET = ex4-11.out
 $(TARGET): $(OBJECTS)
 	cc -o $(TARGET) $(OBJECTS) -lm
 ex4-6.o: cal.h
