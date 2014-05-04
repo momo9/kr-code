@@ -1,5 +1,5 @@
-OBJ = ex5-2.o getc.o
-TAR = ex5-2.out
+OBJ = ex5-3.o
+TAR = ex5-3.out
 
 $(TAR): $(OBJ)
 	cc -o $(TAR) $(OBJ)
