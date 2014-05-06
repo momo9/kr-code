@@ -1,5 +1,5 @@
-OBJ = ex5-9.o
-TAR = ex5-9.out
+OBJ = ex5-10.o stack.o
+TAR = ex5-10.out
 
 $(TAR): $(OBJ)
 	cc -o $(TAR) $(OBJ)
