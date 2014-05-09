@@ -4,58 +4,52 @@
 
 #define N       64
 
-// can be isdigit(), isupper(), islower() and so on
-typedef int (*pfun_type)(int);
+enum Type {
+  NUMBER,
+  UPPER,
+  LOWER,
+  OTHER
+};
 
-static void exp_one(char s1[], int *pis1, int lens1,
-                    char s2[], int *pis2,
-                    pfun_type pf) {
-  int end;
-  end = *pis1 + 2;
-
-  // out of range || not a group  || not succesive
-  if (end > lens1 || !pf(s1[end]) || s1[*pis1 + 1] != '-') {
-    // copy
-    for (; s1[*pis1] && *pis1 <= end; ++(*pis1)) {
-      s2[(*pis2)++] = s1[*pis1];
-    }
-    // give an end
-    if (s1[*pis1] == 0) {
-      s2[(*pis2)++] = 0;
-    } 
-    return;
+static enum Type getType(char c) {
+  if (isdigit(c)) {
+    return NUMBER;
+  } else if (isupper(c)) {
+    return UPPER;
+  } else if (islower(c)) {
+    return LOWER;
+  } else {
+    return OTHER;
   }
-
-  // expand
-  char c;
-  for (c = s1[*pis1]; c <= s1[end]; ++c) {
-    s2[(*pis2)++] = c;
-  }
-
-  *pis1 = end + 1;
 }
 
-static void expand(char s1[], char s2[]) {
-  int len, is1, is2;
-  len = strlen(s1);
-  for (is1 = 0, is2 = 0; is1 <= len;) {
-    if (isdigit(s1[is1])) {
-      exp_one(s1, &is1, len, s2, &is2, isdigit);
-    } else if (isupper(s1[is1])) {
-      exp_one(s1, &is1, len, s2, &is2, isupper);
-    } else if (islower(s1[is1])) {
-      exp_one(s1, &is1, len, s2, &is2, islower);
-    // copy
+static void expand(char *dst, char *src) {
+  char pre = 0, post;
+  while (*src) {
+    if (*src == '-') {
+      // get the next char
+      post = *++src;
+      // pre - post can be expanded
+      if (post && getType(pre) == getType(post) && pre < post) {
+        char c;
+        for (c = pre + 1; c < post; ++c) {
+          pre = *dst++ = c;
+        }
+      // pre - post can not be expanded, just print the '-'
+      } else {
+        pre = *dst++ = '-';
+      }
+    // just print if not '-'
     } else {
-      s2[is2++] = s1[is1++];
+      pre = *dst++ = *src++;
     }
   }
+  *dst = 0;
 }
 
-main(int argc, char *argv[]) {
-  char *s1 = argv[1];
-  char s2[N];
-
-  expand(s1, s2);
-  puts(s2);
+main (int argc, char *argv[]) {
+  char c;
+  char s[N];
+  expand(s, argv[1]);
+  puts(s);
 }
