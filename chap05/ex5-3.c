@@ -12,6 +12,8 @@ static void mystrcat(char s[], char t[]) {
 main(int argc, char *argv[]) {
   char s[MAX_SIZE];
   char *pa, *ps;
+
+  // copy argv[1] to s;
   for (ps = s, pa = argv[1]; *pa; ++pa, ++ps) *ps = *pa;
   *ps = 0;
   mystrcat(s, argv[2]);

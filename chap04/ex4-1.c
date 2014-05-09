@@ -9,6 +9,7 @@ static int strrindex(char s[], char t[]) {
   assert(lens > lent);
 
   int i, j, k;
+  // check from end
   for (i = lens - lent; i >= 0; --i) {
     for (j = i, k = 0; t[k] && t[k] == s[j]; ++j, ++k);
     if (t[k] == 0) return i;

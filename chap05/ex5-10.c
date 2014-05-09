@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <assert.h>
 
+// arguments version for calculator
 main(int argc, char *argv[]) {
   char c;
   double t;
@@ -12,6 +13,7 @@ main(int argc, char *argv[]) {
   //}
   //exit(0);
   while (--argc) {
+    // get the first char of argv[x]
     c = **++argv;
     //printf("%c\n", c);
     //printf("%s\n", *argv);
@@ -21,6 +23,7 @@ main(int argc, char *argv[]) {
       //puts("push");
       continue;
     } else {
+      // the first char is '+' or '-', and the second char is a number
       if ((c == '+' || c == '-') && isdigit(*(*argv + 1))) {
         //printf("%c\n", *(*argv + 1));
         //printf("%d\n", isdigit(*(*argv + 1)));
@@ -28,6 +31,7 @@ main(int argc, char *argv[]) {
         //puts("push");
         continue;
       }
+      // the first char is an operator
       switch (c) {
         case '+':
           push(pop() + pop());
