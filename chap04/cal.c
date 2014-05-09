@@ -9,8 +9,11 @@
 #define IS_NUMBER       '0'
 #define MAX_SIZE        64
 
+// 26 variables: A B C D ... Z
 static double var[26];
+// variable to save the last answer
 static double ans;
+// usefull when assignment
 static char cur_var;
 
 // get operator or number
@@ -21,27 +24,29 @@ static int getop(char **pps, char s[]) {
     s[0] = 0;
     return EOF;
   }
+  // get the string (an operator or a number)
   for (i = 0, ps = *pps; ps[i] != ' ' && ps[i] != 0; ++i) {
     s[i] = ps[i];
   }
-  if (ps[i] == 0) {
+  
+  if (ps[i] == 0) { // the whole equation is over, set *pps to \0
     *pps += i;
-  } else {
+  } else { // the whole equation is not over, set *pps to the char after ' '
     *pps += (i + 1);
   }
   s[i] = 0;
   if (isdigit(ps[i - 1])) return IS_NUMBER;
   else if (i == 1 && isupper(ps[0])) return IS_VAR;
-  else return ps[i - 1];
+  else return ps[i - 1]; // an operator or other, the judgement is in cal()
 }
 
 static int is_str(char str[], char s[]) {
   int i;
   for (i = 0; str[i] && s[i] && str[i] == s[i]; ++i);
   if (str[i] == 0 && s[i] == 0) {
-    return 1;
+    return 1; // str and s are the same
   } else {
-    return 0;
+    return 0; // str and s are diffrent
   }
 }
 double cal(char equ[]) {
@@ -61,13 +66,14 @@ double cal(char equ[]) {
         push(atof(s)); 
         break;
       case IS_VAR:
-        cur_var = s[0];
+        cur_var = s[0]; // used for assignment
         push(var[cur_var - 'A']);
         break;
       case '=':
-        pop();
+        pop(); 
+        // usage: 5 A = ; in this process, origin 'A' will be pushed into the stack, so pop it
         var[cur_var - 'A'] = pop();
-        push(var[cur_var - 'A']);
+        push(var[cur_var - 'A']); // the assignment also have a value
         break;
       case '+':
         push(pop() + pop());
