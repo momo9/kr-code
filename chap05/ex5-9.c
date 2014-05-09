@@ -11,9 +11,11 @@ static int month_day(int year, int day, int *pm, int *pd) {
   int (*a)[13], *p;
   if (year <= 0) return -1;
   leap = (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) ? 1 : 0;
+  // normal point tab[0], leap point tab[1]
   a = tab + leap;
   if (day > 365 + leap) return -1;
   int d;
+  // *a point at first element in tab[x]
   for (d = day, p = *a + 1; d > *p; d -= *p++);
   *pm = p - *a;
   *pd = d;

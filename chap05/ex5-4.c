@@ -4,6 +4,7 @@ static int strend(char s[], char t[]) {
   char *ps, *pt;
   for (ps = s; *ps; ++ps);
   for (pt = t; *pt; ++pt);
+  // backwords comparation
   for (; *ps == *pt && pt != t && ps != s; --pt, --ps);
   if (pt == t && *pt == *ps) return 1;
   else return 0;

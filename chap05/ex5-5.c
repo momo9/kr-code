@@ -13,11 +13,13 @@ static void mystrncpy(char dst[], char src[], int n) {
   for (ps = src, pd = dst, i = 0; i < n && *ps; ++ps, ++pd, ++i) {
     *pd = *ps;
   }
+  // padding zero
   for (; i < n; ++i) *pd++ = 0;
 }
 
 static void mystrncat(char dst[], char src[], int n) {
   char *pd, *ps;
+  // move the end
   for (pd = dst; *pd; ++pd);
   for (ps = src; *ps && n; --n) *pd++ = *ps++;
   *pd = 0;
@@ -34,9 +36,9 @@ static int mystrncmp(char *s1, char *s2, int n) {
     //puts("enter.");
     //PUTD(n);
     if (*s1 == 0 && *s2 == 0) return 0;
-    else return *s1 - *s2;
+    else return *s1 - *s2; // when different, return the diff of the first different char
   }
-  return 0;
+  return 0; // means equal
 }
 
 main(int argc, char *argv[]) {

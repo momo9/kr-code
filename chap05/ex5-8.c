@@ -10,6 +10,7 @@ static int month_day(int year, int day, int *pm, int *pd) {
   int leap;
   if (year <= 0) return -1;
   leap = (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) ? 1 : 0;
+  // normal 365, leap 366
   if (day > 365 + leap) return -1;
   int m, d;
   for (m = 1, d = day; d > tab[leap][m]; d -= tab[leap][m++]);
