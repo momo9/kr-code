@@ -30,6 +30,9 @@ static Type gettoken(void) {
       return BRACKETS;
     case '(': // match '()' or '(abcd)'
       if ((c = mygetc()) == ')') { // match '()'
+        token[0] = '(';
+        token[1] = ')';
+        token[3] = 0;
         return PARENS;
       } else {
         myungetc(c); // when (abcd), 'a' read should be put back, and call dcl() to explain 'abcd'
@@ -116,6 +119,54 @@ int explain(void) {
   // result in extern array 'out'
   printf("%s", out);
   puts(type);
+
+  return 0;
+}
+
+// transform explain to declaration
+int unexp(void) {
+  int ret;
+  char temp[MAX_TOKEN];
+  Type tokentype, pretype;
+
+  // get the name
+  ret = scanf("%s ", out);
+  if (ret == EOF) {
+    return EOF;
+  }
+
+  // use pretype to avoid () not necessary
+  pretype = OTHER;
+
+  // NAME means match the type (must be the last token)
+  while ((tokentype = gettoken()) != NAME) {
+    //printf("out: %s\n", out);
+    //printf("token: %s\n", token);
+    switch(tokentype) {
+      case BRACKETS: case PARENS:
+        // only when the previous token is '*', there is need to add ()
+        if (pretype == PTR) {
+          sprintf(temp, "(%s)", out);
+          strcpy(out, temp);
+        }
+        sprintf(temp, "%s%s", out, token);
+        strcpy(out, temp);
+        break;
+      case PTR:
+        sprintf(temp, "*%s", out);
+        strcpy(out, temp);
+        break;
+      default:
+        continue;
+        break;
+    }
+    pretype = tokentype;
+  }
+
+  // add variable type
+  sprintf(temp, "%s %s", token, out);
+  strcpy(out, temp);
+  puts(out);
 
   return 0;
 }

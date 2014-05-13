@@ -14,4 +14,7 @@ typedef enum {
 // explain a declaration
 int explain(void);
 
+// transform explain to declaration
+int unexp(void);
+
 #endif
