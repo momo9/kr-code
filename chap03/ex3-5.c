@@ -5,6 +5,7 @@
 
 #define SIZE       64
 
+// reverse the string
 static void reverse(char s[]) {
   int i, j;
   for (i = 0, j = strlen(s) - 1; i < j; ++i, --j) {
@@ -15,6 +16,7 @@ static void reverse(char s[]) {
   }
 }
 
+// transfer n(integer) to a character
 static char getd(int n) {
   assert(n < 16);
 
@@ -28,6 +30,7 @@ static char getd(int n) {
 static void itob(int n, char s[], int b, int wid) {
   assert(b <= 16);
   int rmd, i;
+  // get left-lsb
   for (rmd = n, i = 0; rmd; rmd /= b) {
     s[i++] = getd(rmd % b);
   }
@@ -35,6 +38,7 @@ static void itob(int n, char s[], int b, int wid) {
     s[i] = ' ';
   }
   s[i] = 0;
+  // transfer to right-lsb
   reverse(s);
 }
 

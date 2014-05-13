@@ -2,6 +2,7 @@
 
 #define N       64
 
+// convert <RETURN> to '\n', and <TAB> to '\t'
 static void escape(char s[], char t[]) {
   int it, is;
   for (it = 0, is = 0; t[it]; ++it) {
@@ -22,6 +23,7 @@ static void escape(char s[], char t[]) {
   s[is] = t[it];
 }
 
+// convert '\n' to <RETURN>, and '\t' to <TAB>
 static void escape_rvt(char s[], char t[]) {
   int it, is;
   for (it = 0, is = 0; t[it]; ++it) {

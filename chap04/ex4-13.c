@@ -3,6 +3,7 @@
 
 #define MAX_SIZE        64
 
+// recursive version of string reverse
 static void rvrs(char s[], int beg, int end) {
   if (beg <= end) {
     int temp;

@@ -6,6 +6,7 @@
 
 static char readbuf[BUF_SIZE];
 
+// read a line to readbuf[]
 static int readline() {
   int c, i;
   for (i = 0, c = getchar(); c != '\n' && c != EOF; c = getchar(), ++i) {

@@ -8,6 +8,7 @@
 #define MAX_SIZE        64
 
 // get operator or number
+// more details in "cal.c"
 static int getop(char **pps, char s[]) {
   int i;
   char *ps;
@@ -33,9 +34,9 @@ static int is_exp(char s[]) {
   int i;
   for (i = 0; sexp[i] && s[i] && sexp[i] == s[i]; ++i);
   if (sexp[i] == 0 && s[i] == 0) {
-    return 1;
+    return 1; // when s == "exp"
   } else {
-    return 0;
+    return 0; // when s != "exp"
   }
 }
 static double cal(char equ[]) {
