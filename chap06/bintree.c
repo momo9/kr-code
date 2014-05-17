@@ -22,8 +22,11 @@ Tnode *freetree(Tnode *pn) {
   if (pn) {
     pn->left = freetree(pn->left);
     pn->right = freetree(pn->right);
+    //printf("free %s\n", pn->word);
     free(pn->word); // 'word' is from malloc()
+    pn->word = 0;
     free(pn);
+    pn = 0;
   }
   return pn;
 }
