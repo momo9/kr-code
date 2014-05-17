@@ -12,7 +12,7 @@
   OTHER
 } Type; */
 
-static int isvar(char c) {
+int isvar(char c) {
   return isalnum(c) || c == '_';
 }
 

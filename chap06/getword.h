@@ -6,4 +6,6 @@
 // return 0 when error occurs
 int getword(char *word, int limit);
 
+int isvar(char c);
+
 #endif
