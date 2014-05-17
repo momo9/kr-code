@@ -4,13 +4,12 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-/*typedef enum {
-  VAR,
-  STR,
-  COM,
-  END,
-  OTHER
-} Type; */
+// indicate the current line number
+static int linenumber = 1;
+
+int getlinenumber() {
+  return linenumber;
+}
 
 int isvar(char c) {
   return isalnum(c) || c == '_';
@@ -19,16 +18,18 @@ int isvar(char c) {
 static void skiperror() {
   int c;
   while (!isspace(c = mygetc()));
-  if (c != '\n') {
-    myungetc(c);
-  }
+  myungetc(c);
 }
 
 int getword(char *word, int limit) {
-  // skip space
   int c;
   char *w = word;
-  while (isspace(c = mygetc()));
+  // skip space and line count
+  while (isspace(c = mygetc())) {
+    if (c == '\n') {
+      ++linenumber;
+    }
+  }
   switch (c) {
     // is comments
     case '/':
@@ -40,10 +41,14 @@ int getword(char *word, int limit) {
         while ((c = mygetc()) != '\n' && limit-- > 1) { // left one for '\0'
           *w++ = c;
         }
+        if (c == '\n') {
+          myungetc(c);
+        }
         if (limit <= 1) {
           // limit is reached, which is an error
           // skip the line
           while ((c = mygetc()) != '\n');
+          myungetc(c);
           return *word = 0;
         }
         // normal return
@@ -72,9 +77,7 @@ int getword(char *word, int limit) {
       // normal case
       *w++ = '\"';
       *w = 0;
-      if (c != '\n') {
-        myungetc(c);
-      }
+      myungetc(c);
       return *word;
       break;
     case EOF:
@@ -98,9 +101,7 @@ int getword(char *word, int limit) {
         // normal case
         *w = 0;
         //fprintf(stderr, "%s\n", word);
-        if (c != '\n') {
-          myungetc(c);
-        }
+        myungetc(c);
         return *word;
       } else {
         // undefined case

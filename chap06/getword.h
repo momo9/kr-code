@@ -8,4 +8,6 @@ int getword(char *word, int limit);
 
 int isvar(char c);
 
+int getlinenumber();
+
 #endif
