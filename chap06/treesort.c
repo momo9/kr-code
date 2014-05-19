@@ -15,15 +15,13 @@ int maxsize() {
 
 static void setarray(Tnode *pt) {
   // set all the nodes in ptrarray in middle order
-  if (sucflag) {
+  if (sucflag && pt) {
     setarray(pt->left);
-    if (pt) {
-      if (realsize < MAX_SIZE) {
-        ptrarray[realsize++] = pt;
-      } else {
-        // too many nodes
-        sucflag = 0;
-      }
+    if (realsize < MAX_SIZE) {
+      ptrarray[realsize++] = pt;
+    } else {
+      // too many nodes
+      sucflag = 0;
     }
     setarray(pt->right);
   }
@@ -34,27 +32,30 @@ static void uninitialization() {
   sucflag = 1;
 }
 
-static int cmpfreq(Tnode *pta, Tnode *ptb) {
-  if (pta->cnt < ptb->cnt) {
-    return -1;
-  } else if (pta->cnt > ptb->cnt) {
-    return 1;
-  } else {
-    return 0;
-  }
+static int cmpfreq(Tnode **pta, Tnode **ptb) {
+//  fprintf(stderr, "%s: %d\n", (*pta)->word, (*pta)->cnt);
+//  fprintf(stderr, "%s: %d\n", (*ptb)->word, (*ptb)->cnt);
+  return (*pta)->cnt - (*ptb)->cnt;
 }
 
 int sortprint(Tnode *proot) {
 
+  //fputs("begin", stderr);
+  // put (the pointers of) nodes in an array
   setarray(proot);
 
-  if (!success) {
+  //fputs("set array", stderr);
+  // too many nodes
+  if (!sucflag) {
     uninitialization();
     return 0;
   }
 
+  //fputs("sort", stderr);
+  // sort the nodes according to their cnt (frequency)
   qsort(ptrarray, realsize, sizeof(Tnode *), cmpfreq);
 
+  // print the nodes
   int i;
   for (i = 0; i < realsize; ++i) {
     printf("%s: %d\n", ptrarray[i]->word, ptrarray[i]->cnt);
