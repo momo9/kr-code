@@ -25,3 +25,5 @@
 # Other
 tags
 makefile
+*.log
+*.swp
