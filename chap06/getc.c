@@ -3,7 +3,7 @@
 #include "getc.h"
 
 #define MAX_SIZE        8192
-#define MAX_LINE        64
+#define MAX_LINE        READLINE_BUFSIZE
 
 static int buf;
 
@@ -36,7 +36,7 @@ int readline(char *s) {
     *s++ = c;
   }
   *s = 0;
-  return i;
+  return (c == EOF) ? -1 : i;
 }
 
 int readlines(char *line[], int max_line) {
