@@ -5,6 +5,7 @@ int mygetc(void);
 void myungetc(int c);
 
 // read a line to s
+// return the number of words
 int readline(char *s);
 
 // read at most max_line lines
