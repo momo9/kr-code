@@ -3,7 +3,7 @@
 
 void *myalloc(size_t n);
 
-void free(void *p);
+void myfree(void *p);
 
 size_t headersize();
 
